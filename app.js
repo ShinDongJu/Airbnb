@@ -13,7 +13,6 @@ var configAuth = require('./config/auth');
 
 var routes = require('./routes/index'),
     users = require('./routes/users'),
-    todos = require('./routes/todos'),
     posts = require('./routes/posts'),
     tasks = require('./routes/tasks');
 
@@ -69,7 +68,6 @@ module.exports = function(app, io) {
 
   app.use('/', routes);
   app.use('/users', users);
-  app.use('/todos', todos);
   app.use('/posts', posts);
   app.use('/tasks', tasks(io));
   routeAuth(app, passport);

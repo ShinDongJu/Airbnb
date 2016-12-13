@@ -3,22 +3,38 @@ extends ../layout
 block content
   .container
     if post.id
-      h1.page-header 글 수정
+      h1.page-header 게시글 수정
     else
-      h1.page-header 글쓰기
+      h1.page-header 숙소 등록
 
     form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
       .form-group
-        label(for='email') Email address
+        label(for='name') 이름(닉네임)
+        input.form-control(type='name', id='name', name='name', placeholder='name', value=post.name)
+      .form-group
+        label(for='email') 이메일
         input.form-control(type='email', id='email', name='email', placeholder='Email', value=post.email)
-        label(for='password') Password
+      .form-group
+        label(for='password') 비밀번호
         input.form-control(type='password', id='password', name='password', placeholder='Password')
       .form-group
-        label(for='title') Title
+        label(for='title') 제목
         input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
       .form-group
-        label(for='content') Content
-        textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+        label(for='city') 도시
+        input.form-control(type='city', id='city', name='city', placeholder='city', value=post.city)
+      .form-group
+        label(for='address') 주소
+        input.form-control(type='address', id='address', name='address', placeholder='address', value=post.address)
+      .form-group
+        label(for='payment') 숙소 요금
+        textarea.form-control(type='payment', id='payment', rows='10', name='payment', placeholder='payment', value=post.payment)
+      .form-group
+        label(for='convenient') 편의시설
+        textarea.form-control(type='convenient', id='convenient', rows='10', name='convenient', placeholder='convenient')= post.convenient
+      .form-group
+        label(for='content') 이용 규칙
+        textarea.form-control(type='content', id='content', rows='10', name='content', placeholder='rule')= post.content
 
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 

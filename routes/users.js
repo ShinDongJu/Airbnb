@@ -14,8 +14,10 @@ function needAuth(req, res, next) {
 function validateForm(form, options) {
   var name = form.name || "";
   var email = form.email || "";
+  var using = form.using || "";
   name = name.trim();
   email = email.trim();
+  using= using.trim();
 
   if (!name) {
     return '이름을 입력해주세요.';
@@ -23,6 +25,10 @@ function validateForm(form, options) {
 
   if (!email) {
     return '이메일을 입력해주세요.';
+  }
+
+  if(!using) {
+    return '주로 사용할 사용 목적을 입력해주세요. (여행자 or 호스트)'
   }
 
   if (!form.password && options.needPassword) {
@@ -86,6 +92,7 @@ router.put('/:id', function(req, res, next) {
 
     user.name = req.body.name;
     user.email = req.body.email;
+    user.using = req.body.using;
     if (req.body.password) {
       user.password = user.generateHash(req.body.password);
     }
@@ -136,6 +143,7 @@ router.post('/', function(req, res, next) {
     var newUser = new User({
       name: req.body.name,
       email: req.body.email,
+      using: req.body.using
     });
     newUser.password = newUser.generateHash(req.body.password);
 

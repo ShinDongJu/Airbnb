@@ -11,11 +11,9 @@
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a(href='/todos') Todo List
+          a(href='/users') 사용자
         li
-          a(href='/users') Users
-        li
-          a(href='/posts') 게시판
+          a(href='/posts') 숙소 예약/등록
         if (currentUser) 
           li
             a(href='/users/#{currentUser._id}') 프로필

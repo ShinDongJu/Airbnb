@@ -4,37 +4,66 @@ block content
   .container
     h1.page-header= post.title
     p
-      b by #{post.email}
+      b by #{post.name} (#{post.email})
       | 
       span at #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
       | 
       | (조회수 #{post.read})
+
+    label(for='city') 도시
+    p.well(style='white-space:pre;')= post.city
+
+    label(for='address') 주소
+    p.well(style='white-space:pre;')= post.address
+
+    label(for='payment') 숙소 요금
+    p.well(style='white-space:pre;')= post.payment
+
+    label(for='convenient') 편의시설
+    p.well(style='white-space:pre;')= post.convenient
+
+    label(for='content') 이용 규칙
     p.well(style='white-space:pre;')= post.content
     
     a.btn.btn-default(href='/posts') 목록 
-    
-  hr
-  h3 댓글 (#{post.numComment})
-  table.table
-    tr
-      th 이메일
-      th 댓글 내용
-      th 날짜
-    each comment in comments
+
+
+    hr
+    h3 예약하기 (#{post.numComment})
+    table.table
       tr
-        td= comment.email
-        td= comment.content
-        td= moment(comment.createdAt).format('YYYY/MM/DD')
-  
-  form.form-inline(action='/posts/' + post._id + '/comments', method='POST')
-    .form-group
-      label.sr-only(for='email') email
-      input.form-control(name='email', placeholder='email')
-    .form-group
-      label.sr-only(for='content') content
-      input.form-control(name='content', size=50, placeholder='content')
-    button.btn.btn-info 댓글 저장
-    
-  hr
+        th 이름(닉네임)
+        th 이메일
+        th Checkin 날짜
+        th Checkout 날짜
+        th 숙박 인원
+        th 예약 날짜
+      each comment in comments
+        tr
+          td= comment.name
+          td= comment.email
+          td= comment.checkin
+          td= comment.checkout
+          td= comment.content
+          td= moment(comment.createdAt).format('YYYY/MM/DD')
+
+    form.form-inline(action='/posts/' + post._id + '/comments', method='POST')
+      .form-group
+        label.sr-only(for='name') name
+        input.form-control(name='name', placeholder='name')
+      .form-group
+        label.sr-only(for='email') email
+        input.form-control(name='email', placeholder='email')
+      .form-group
+        label.sr-only(for='checkin') checkin
+        input.form-control(name='checkin', placeholder='checkin: (YYYY/MM/DD) 형식으로 입력')
+      .form-group
+        label.sr-only(for='checkout') checkout
+        input.form-control(name='checkout', placeholder='checkout: (YYYY/MM/DD) 형식으로 입력')
+      .form-group
+        label.sr-only(for='content') content
+        input.form-control(name='content', placeholder='숙박 인원')
+      button.btn.btn-info 예약하기
+    hr
 
   

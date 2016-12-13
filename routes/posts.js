@@ -3,8 +3,16 @@ var express = require('express'),
     Comment = require('../models/Comment');
 var router = express.Router();
 
+function needAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    req.flash('danger', '로그인이 필요합니다.');
+    res.redirect('/signin');
+  }
+}
 /* GET post listing. */
-router.get('/', function (req, res, next) {
+router.get('/', needAuth, function (req, res, next) {
   Post.find({}, function (err, posts) {
     if (err) {
       return next(err);
@@ -30,8 +38,13 @@ router.post('/', function (req, res, next) {
       return next(err);
     }
     var posts = new Post({
+      name: req.body.name,
       email: req.body.email,
       title: req.body.title,
+      city: req.body.city,
+      address: req.body.address,
+      payment: req.body.payment,
+      convenient: req.body.convenient,
       content: req.body.content
     });
     posts.password = req.body.password;
@@ -69,8 +82,13 @@ router.put('/:id', function (req, res, next) {
     if (post.password !== req.body.password) {
       return res.redirect('back');
     }
+    post.name = req.body.name;
     post.email = req.body.email;
     post.title = req.body.title;
+    post.city = req.body.city;
+    post.address = req.body.address;
+    post.payment = req.body.payment;
+    post.convenient = req.body.convenient;
     post.content = req.body.content;
     if (req.body.password) {
       post.password = req.body.password;
@@ -98,8 +116,13 @@ router.delete('/:id', function (req, res, next) {
 // 글쓰기
 router.post('/', function (req, res, next) {
   var newPost = new Post({
+    name: req.body.name,
     email: req.body.email,
     title: req.body.title,
+    city: req.body.city,
+    address: req.body.address,
+    payment: req.body.payment,
+    convenient: req.body.convenient,
     content: req.body.content
   });
   newPost.password = req.body.password;
@@ -136,10 +159,14 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+// 예약하기
 router.post('/:id/comments', function(req, res, next) {
   var comment = new Comment({
+    name: req.body.name,
     post: req.params.id,
     email: req.body.email,
+    checkin: req.body.checkin,
+    checkout: req.body.checkout,
     content: req.body.content
   });
 

@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  h1 글 작성
+  h1 숙소 등록
   
   form(action='/posts', method='POST')
     .form-group
@@ -11,7 +11,19 @@ block content
       label(for='title') 제목
       input.form-control(name='title')
     .form-group
-      label(for='content') 내용
+      label(for='city') 도시
+      input.form-control(name='city')
+    .form-group
+      label(for='address') 주소
+      input.form-control(name='address')
+    .form-group
+      label(for='payment') 숙소 요금
+      input.form-control(name='payment')
+    .form-group
+      label(for='convenient') 편의시설
+      input.form-control(name='convenient')
+    .form-group
+      label(for='content') 이용 규칙
       textarea.form-control(name='content')
     .form-action
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
